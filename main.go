@@ -1,0 +1,33 @@
+package main
+
+import (
+	"Nboat/dbWork"
+	"Nboat/npc"
+	"github.com/dchenk/go-render-quill"
+	"github.com/gin-contrib/static"
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+func main() {
+	server := gin.Default()
+
+	server.Use(static.ServeRoot("/", "front"))
+	mainServer := server.Group("/api")
+
+	database := dbWork.ConnectionInit()
+
+	npc.BindNPC(mainServer, database)
+
+	server.GET("/er", func(ctx *gin.Context) {
+		delta := `[{"insert":"This "},{"attributes":{"italic":true},"insert":"is"},
+    {"insert":" "},{"attributes":{"bold":true},"insert":"great!"},{"insert":"\n"}]`
+
+		html, err := quill.Render([]byte(delta))
+		if err != nil {
+			panic(err)
+		}
+		ctx.Data(http.StatusOK, "text/html; charset=utf-8", html)
+	})
+	_ = server.Run(":8080")
+}
