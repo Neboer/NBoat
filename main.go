@@ -2,7 +2,8 @@ package main
 
 import (
 	"Nboat/dbWork"
-	"Nboat/npc"
+	"Nboat/nopiser"
+	"Nboat/ritin"
 	"github.com/dchenk/go-render-quill"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
@@ -17,7 +18,8 @@ func main() {
 
 	database := dbWork.ConnectionInit()
 
-	npc.BindNPC(mainServer, database)
+	nopiser.BindNopiser(mainServer, database)
+	ritin.BindRitin(mainServer, database)
 
 	server.GET("/er", func(ctx *gin.Context) {
 		delta := `[{"insert":"This "},{"attributes":{"italic":true},"insert":"is"},

@@ -62,7 +62,7 @@ $(() => {
         fd.append('image', file);
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api/npc/picture', true);
+        xhr.open('POST', '/api/nopiser/picture', true);
         xhr.onload = () => {
             if (xhr.status === 200) {
                 // this is callback data: url
@@ -85,4 +85,11 @@ $(() => {
     }
 
 // quill editor add image handler
+
+    $("#submit").on("click", () => {
+        let delta = quill.getContents();
+        $.post("/api/ritin/article", JSON.stringify({content: JSON.stringify(delta.ops)}), (data) => {
+            window.location.href = "/api/ritin/article/" + data.articleId
+        })
+    })
 });
