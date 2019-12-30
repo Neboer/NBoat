@@ -26,3 +26,7 @@ func getArticleDeltaFromMongoCollection(articleIdHexString string, ritinMongoCol
 	_ = dbWork.FindDataInMongoWithCollectionId(ritinMongoCollection, articleIdHexString, &result)
 	return result
 }
+
+func updateArticleFromMongoCollection(newDelta string, articleIdHexString string, ritinMongoCollection *mongo.Collection) {
+	_ = dbWork.UpdateStructureDataFromCollection(ritinMongoCollection, articleIdHexString, bson.M{"content": newDelta, "lastModified": time.Now()})
+}

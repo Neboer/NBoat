@@ -1,5 +1,5 @@
 package ritin
 
-type CreateNewArticleUpload struct {
+type UploadedArticle struct {
 	Content string `json:"content"`
 }

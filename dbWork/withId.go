@@ -29,3 +29,13 @@ func InsertStructureDataIntoCollection(collection *mongo.Collection, structuredD
 	}
 	return insertResult.InsertedID.(primitive.ObjectID).Hex(), err
 }
+
+func UpdateStructureDataFromCollection(collection *mongo.Collection, hexId string, newStructuredData primitive.M) error {
+	objectId, err := primitive.ObjectIDFromHex(hexId)
+	if err != nil {
+		return err
+	}
+	mongoContext := context.Background()
+	result := collection.FindOneAndReplace(mongoContext, bson.M{"_id": objectId}, newStructuredData)
+	return result.Err()
+}

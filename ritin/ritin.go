@@ -12,7 +12,7 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 	mainGroup := engine.Group("/ritin")
 	// 添加delta。
 	mainGroup.POST("/article", func(context *gin.Context) {
-		upload := CreateNewArticleUpload{}
+		upload := UploadedArticle{}
 		_ = context.BindJSON(&upload)
 		hexId := insertArticleDeltaIntoMongoCollection(upload.Content, ritinCollection)
 		context.JSON(http.StatusOK, gin.H{"articleId": hexId})
@@ -24,5 +24,19 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 		deltaContent := articleRecord.Content
 		renderedHtml, _ := quill.Render([]byte(deltaContent))
 		context.Data(http.StatusOK, "text/html; charset=utf-8", renderedHtml)
+	})
+
+	mainGroup.GET("/edit/:hexId", func(context *gin.Context) {
+		queryId := context.Param("hexId")
+		articleRecord := getArticleDeltaFromMongoCollection(queryId, ritinCollection)
+		deltaContent := articleRecord.Content
+		context.JSON(http.StatusOK, gin.H{"delta": deltaContent})
+	})
+
+	mainGroup.PUT("/article/:hexId", func(context *gin.Context) {
+		queryId := context.Param("hexId")
+		upload := UploadedArticle{}
+		_ = context.BindJSON(&upload)
+		updateArticleFromMongoCollection(upload.Content, queryId, ritinCollection)
 	})
 }

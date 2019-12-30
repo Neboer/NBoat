@@ -91,5 +91,5 @@ $(() => {
         $.post("/api/ritin/article", JSON.stringify({content: JSON.stringify(delta.ops)}), (data) => {
             window.location.href = "/api/ritin/article/" + data.articleId
         })
-    })
+    });
 });
