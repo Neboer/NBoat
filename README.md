@@ -4,7 +4,7 @@ Neboer's Boat是"Neboer's Blog isn't Only About Technique"
 
 这个项目是Neboer的个人博客。使用技术栈Native javascript + golang-gin + Mongodb
 
-本项目包含三个子项目：Neboer's Boat、RTP-core和NPC。
+本项目包含三个子项目：Neboer's Boat、Ritin和Nopiser。
 
 
 ## Neboer's Boat
