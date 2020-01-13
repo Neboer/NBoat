@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Nboat/boat"
 	"Nboat/dbWork"
 	"Nboat/nopiser"
 	"Nboat/ritin"
@@ -14,6 +15,7 @@ func main() {
 	server := gin.Default()
 
 	server.Use(static.ServeRoot("/", "front"))
+	boat.BindBoatRenderer(server.Group(""))
 	mainServer := server.Group("/api")
 
 	database := dbWork.ConnectionInit()
