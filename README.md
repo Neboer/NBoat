@@ -7,6 +7,10 @@ Neboer's Boat是"Neboer's Blog isn't Only About Technique"
 本项目包含三个子项目：Neboer's Boat、Ritin和Nopiser。
 
 
+## 开发初衷
+Neboer 确实需要一个博客。博客具有一定的日记性质，可以记录我的生命。服务器上的记录保存的总时长恐怕比我的人生更久。
+我认识的人大多有自己的博客什么的，感觉拥有一个个人主页确实也是一件很酷的事情，所以希望
+
 ## Neboer's Boat
 博客的大前端。
 

@@ -39,3 +39,10 @@ func UpdateStructureDataFromCollection(collection *mongo.Collection, hexId strin
 	result := collection.FindOneAndReplace(mongoContext, bson.M{"_id": objectId}, newStructuredData)
 	return result.Err()
 }
+
+func GetDocumentList(collection *mongo.Collection, resultStructure interface{}) error {
+	mongoContext := context.Background()
+	resultCursor, _ := collection.Find(mongoContext, primitive.M{})
+	err := resultCursor.All(mongoContext, resultStructure)
+	return err
+}

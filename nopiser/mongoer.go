@@ -8,9 +8,9 @@ import (
 )
 
 type PictureRecord struct {
-	ID             primitive.ObjectID
-	MIME           string
-	PictureContent primitive.Binary
+	ID             primitive.ObjectID `bson:"_id"`
+	MIME           string             `bson:"MIME"`
+	PictureContent primitive.Binary   `bson:"PictureContent"`
 }
 
 func InsertPictureIntoMongoCollection(pictureContent []byte, pictureMIMEValue string, pictureCollection *mongo.Collection) string {

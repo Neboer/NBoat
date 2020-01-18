@@ -18,9 +18,14 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 		context.JSON(http.StatusOK, gin.H{"articleId": hexId})
 	})
 
+	mainGroup.GET("/article", func(context *gin.Context) {
+		articleList := GetArticleList(ritinCollection)
+		context.JSON(200, articleList)
+	})
+
 	mainGroup.GET("/article/:hexId", func(context *gin.Context) {
 		queryId := context.Param("hexId")
-		articleRecord := getArticleDeltaFromMongoCollection(queryId, ritinCollection)
+		articleRecord := getArticleFromMongoCollection(queryId, ritinCollection)
 		deltaContent := articleRecord.Content
 		renderedHtml, _ := quill.Render([]byte(deltaContent))
 		context.Data(http.StatusOK, "text/html; charset=utf-8", renderedHtml)
@@ -28,7 +33,7 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 
 	mainGroup.GET("/edit/:hexId", func(context *gin.Context) {
 		queryId := context.Param("hexId")
-		articleRecord := getArticleDeltaFromMongoCollection(queryId, ritinCollection)
+		articleRecord := getArticleFromMongoCollection(queryId, ritinCollection)
 		deltaContent := articleRecord.Content
 		context.JSON(http.StatusOK, gin.H{"delta": deltaContent})
 	})

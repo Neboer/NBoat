@@ -9,10 +9,10 @@ import (
 )
 
 type ArticleRecord struct {
-	ID           primitive.ObjectID `json:"_id"`
-	Content      string             `json:"content"`
-	CreateTime   primitive.DateTime `json:"create_time"`
-	LastModified primitive.DateTime `json:"last_modified"`
+	ID           primitive.ObjectID `bson:"_id, omitempty"`
+	Content      string             `bson:"content"`
+	CreateTime   primitive.DateTime `bson:"createTime"`
+	LastModified primitive.DateTime `bson:"lastModified"`
 }
 
 func insertArticleDeltaIntoMongoCollection(delta string, ritinMongoCollection *mongo.Collection) string {
@@ -21,7 +21,7 @@ func insertArticleDeltaIntoMongoCollection(delta string, ritinMongoCollection *m
 	return hexId
 }
 
-func getArticleDeltaFromMongoCollection(articleIdHexString string, ritinMongoCollection *mongo.Collection) ArticleRecord {
+func getArticleFromMongoCollection(articleIdHexString string, ritinMongoCollection *mongo.Collection) ArticleRecord {
 	result := ArticleRecord{}
 	_ = dbWork.FindDataInMongoWithCollectionId(ritinMongoCollection, articleIdHexString, &result)
 	return result
@@ -29,4 +29,10 @@ func getArticleDeltaFromMongoCollection(articleIdHexString string, ritinMongoCol
 
 func updateArticleFromMongoCollection(newDelta string, articleIdHexString string, ritinMongoCollection *mongo.Collection) {
 	_ = dbWork.UpdateStructureDataFromCollection(ritinMongoCollection, articleIdHexString, bson.M{"content": newDelta, "lastModified": time.Now()})
+}
+
+func getArticleListFromMongoCollection(ritinMongoCollection *mongo.Collection) []ArticleRecord {
+	result := make([]ArticleRecord, 0)
+	_ = dbWork.GetDocumentList(ritinMongoCollection, &result)
+	return result
 }
