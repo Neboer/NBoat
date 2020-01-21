@@ -1,7 +1,7 @@
+// ritin 的web api。通过调用api.go的函数，做基于mongoer.go的抽象，mongoer.go再调用dbwork库进行操作。
 package ritin
 
 import (
-	quill "github.com/dchenk/go-render-quill"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
@@ -12,9 +12,11 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 	mainGroup := engine.Group("/ritin")
 	// 添加delta。
 	mainGroup.POST("/article", func(context *gin.Context) {
-		upload := UploadedArticle{}
+		upload := struct {
+			Content string `json:"content"`
+		}{}
 		_ = context.BindJSON(&upload)
-		hexId := insertArticleDeltaIntoMongoCollection(upload.Content, ritinCollection)
+		hexId := InsertArticle(upload.Content, ritinCollection)
 		context.JSON(http.StatusOK, gin.H{"articleId": hexId})
 	})
 
@@ -25,10 +27,12 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 
 	mainGroup.GET("/article/:hexId", func(context *gin.Context) {
 		queryId := context.Param("hexId")
-		articleRecord := getArticleFromMongoCollection(queryId, ritinCollection)
-		deltaContent := articleRecord.Content
-		renderedHtml, _ := quill.Render([]byte(deltaContent))
-		context.Data(http.StatusOK, "text/html; charset=utf-8", renderedHtml)
+		article := GetArticle(queryId, ritinCollection)
+		context.JSON(200, article)
+		//articleRecord := getArticleFromMongoCollection(queryId, ritinCollection)
+		//deltaContent := articleRecord.Content
+		//renderedHtml, _ := quill.Render([]byte(deltaContent))
+		//context.Data(http.StatusOK, "text/html; charset=utf-8", renderedHtml)
 	})
 
 	mainGroup.GET("/edit/:hexId", func(context *gin.Context) {
@@ -40,8 +44,13 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 
 	mainGroup.PUT("/article/:hexId", func(context *gin.Context) {
 		queryId := context.Param("hexId")
-		upload := UploadedArticle{}
+		upload := struct {
+			Content string `json:"content"`
+		}{""}
+		_ = context.BindJSON(&upload)
+		UpdateArticle(queryId, ritinCollection, upload.Content)
 		_ = context.BindJSON(&upload)
 		updateArticleFromMongoCollection(upload.Content, queryId, ritinCollection)
+		context.JSON(200, gin.H{"result": "success."})
 	})
 }

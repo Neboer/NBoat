@@ -1,4 +1,7 @@
 # Neboer's Boat
+
+> 请注意：Neboer's boat 并不是某人渣诚的Nice boat，玩梗请适度。
+
 Neboer's Boat是"Neboer's Blog isn't Only About Technique"
 的缩略形式。
 
