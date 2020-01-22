@@ -27,8 +27,12 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 
 	mainGroup.GET("/article/:hexId", func(context *gin.Context) {
 		queryId := context.Param("hexId")
-		article := GetArticle(queryId, ritinCollection)
-		context.JSON(200, article)
+		article, err := GetArticle(queryId, ritinCollection)
+		if err != nil {
+			handleErr(context, err)
+		} else {
+			context.JSON(200, article)
+		}
 		//articleRecord := getArticleFromMongoCollection(queryId, ritinCollection)
 		//deltaContent := articleRecord.Content
 		//renderedHtml, _ := quill.Render([]byte(deltaContent))
@@ -37,7 +41,7 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 
 	mainGroup.GET("/edit/:hexId", func(context *gin.Context) {
 		queryId := context.Param("hexId")
-		articleRecord := getArticleFromMongoCollection(queryId, ritinCollection)
+		articleRecord, _ := getArticleFromMongoCollection(queryId, ritinCollection)
 		deltaContent := articleRecord.Content
 		context.JSON(http.StatusOK, gin.H{"delta": deltaContent})
 	})
@@ -46,11 +50,19 @@ func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
 		queryId := context.Param("hexId")
 		upload := struct {
 			Content string `json:"content"`
-		}{""}
+		}{}
 		_ = context.BindJSON(&upload)
 		UpdateArticle(queryId, ritinCollection, upload.Content)
 		_ = context.BindJSON(&upload)
 		updateArticleFromMongoCollection(upload.Content, queryId, ritinCollection)
 		context.JSON(200, gin.H{"result": "success."})
 	})
+}
+
+func handleErr(ctx *gin.Context, err error) {
+	if err == mongo.ErrNoDocuments {
+		ctx.String(404, "no such article")
+	} else {
+		_ = ctx.AbortWithError(400, err)
+	}
 }

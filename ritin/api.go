@@ -23,14 +23,15 @@ func InsertArticle(article string, collection *mongo.Collection) string {
 	return hexId
 }
 
-func GetArticle(articleHexID string, collection *mongo.Collection) Article {
-	articleRecord := getArticleFromMongoCollection(articleHexID, collection)
-	return Article{
+func GetArticle(articleHexID string, collection *mongo.Collection) (Article, error) {
+	articleRecord, err := getArticleFromMongoCollection(articleHexID, collection)
+	resultArticle := Article{
 		Id:             articleRecord.ID.Hex(),
 		CreateTime:     articleRecord.CreateTime.Time(),
 		LastModifyTime: articleRecord.LastModified.Time(),
 		Content:        articleRecord.Content,
 	}
+	return resultArticle, err
 }
 
 func UpdateArticle(articleHexID string, collection *mongo.Collection, newArticle string) {

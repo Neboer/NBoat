@@ -16,7 +16,7 @@ func FindDataInMongoWithCollectionId(collection *mongo.Collection, hexId string,
 	searchResult := collection.FindOne(mongoContext, bson.M{"_id": objectId})
 	err = searchResult.Decode(resultStructure)
 	if err != nil {
-		return err
+		return err // mongo.ErrNoDocuments
 	}
 	return nil
 }
@@ -40,6 +40,7 @@ func UpdateStructureDataFromCollection(collection *mongo.Collection, hexId strin
 	return result.Err()
 }
 
+// 等等你混进来是干什么的，这是withid的地方。。。
 func GetDocumentList(collection *mongo.Collection, resultStructure interface{}) error {
 	mongoContext := context.Background()
 	resultCursor, _ := collection.Find(mongoContext, primitive.M{})

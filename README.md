@@ -1,6 +1,13 @@
 # Neboer's Boat
 
-> 请注意：Neboer's boat 并不是某人渣诚的Nice boat，玩梗请适度。
+
+<p align="center"><img src="https://bit.ly/2TMhT93" width="250"></p>
+
+<h4 align="center">宮水 三葉</h4>
+
+> miyamizu mitsuha (kimi no na wa) drawn by takahiro-rikky
+
+> 这并不是这个博客项目的图标！！！仅仅是因为现在logo没做好用这个凑数罢了QAQ
 
 Neboer's Boat是"Neboer's Blog isn't Only About Technique"
 的缩略形式。

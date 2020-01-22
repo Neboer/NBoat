@@ -3,7 +3,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/ritin/article/5e086c739aef3f8868738300
+GET http://localhost:8080/api/ritin/article/5e26f733f203dd931bce9ad9
 Accept: application/json
 
 ###

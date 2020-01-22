@@ -21,10 +21,11 @@ func insertArticleDeltaIntoMongoCollection(delta string, ritinMongoCollection *m
 	return hexId
 }
 
-func getArticleFromMongoCollection(articleIdHexString string, ritinMongoCollection *mongo.Collection) ArticleRecord {
+func getArticleFromMongoCollection(articleIdHexString string, ritinMongoCollection *mongo.Collection) (ArticleRecord, error) {
 	result := ArticleRecord{}
-	_ = dbWork.FindDataInMongoWithCollectionId(ritinMongoCollection, articleIdHexString, &result)
-	return result
+	err := dbWork.FindDataInMongoWithCollectionId(ritinMongoCollection, articleIdHexString, &result)
+	// err == mongo.ErrNoDocuments or mongo.
+	return result, err
 }
 
 func updateArticleFromMongoCollection(newDelta string, articleIdHexString string, ritinMongoCollection *mongo.Collection) {
