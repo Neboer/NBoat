@@ -24,12 +24,13 @@ type BlogInRecord struct {
 }
 
 // 在api层面应该完成插入ritin的操作，然后构建BlogRecord对象。
-func insertBlogToMongoCollection(blog BlogInRecord, collection *mongo.Collection) {
-	_, _ = dbWork.InsertStructureDataIntoCollection(collection, primitive.M{
+func insertBlogToMongoCollection(blog BlogInRecord, collection *mongo.Collection) string {
+	blogHexID, _ := dbWork.InsertStructureDataIntoCollection(collection, primitive.M{
 		"blogName":        blog.BlogName,
 		"coverPictureURL": blog.CoverPictureURL,
 		"articleID":       primitive.ObjectIDFromHex(blog.RelativeRitinHexID),
 	})
+	return blogHexID
 }
 
 func getBlogListFromMongoCollection(collection *mongo.Collection) []BlogRecord {
@@ -45,7 +46,8 @@ func getBlogFromMongoCollection(blogID string, collection *mongo.Collection) (Bl
 	return result, err
 }
 
-// 你更新的是blog还是article？这一点十分重要，正常情况下，blog本身是不应该做改动的。但是也可以改。
+// 你更新的是blog还是article？这一点十分重要，正常情况下，blog本身是不应该做改动的。但是也可以改。前端收到“修改”的请求的时候，应该直接查询articleID
+// 然后就修改article就可以了，没必要操作blog本身。
 func updateBlogFromMongoCollection(blogID string, record BlogInRecord, collection *mongo.Collection) {
 	_ = dbWork.UpdateStructureDataFromCollection(collection, blogID, primitive.M{
 		"blogName":        record.BlogName,
