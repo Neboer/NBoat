@@ -25,10 +25,11 @@ type BlogInRecord struct {
 
 // 在api层面应该完成插入ritin的操作，然后构建BlogRecord对象。
 func insertBlogToMongoCollection(blog BlogInRecord, collection *mongo.Collection) string {
+	articleID, _ := primitive.ObjectIDFromHex(blog.RelativeRitinHexID)
 	blogHexID, _ := dbWork.InsertStructureDataIntoCollection(collection, primitive.M{
 		"blogName":        blog.BlogName,
 		"coverPictureURL": blog.CoverPictureURL,
-		"articleID":       primitive.ObjectIDFromHex(blog.RelativeRitinHexID),
+		"articleID":       articleID,
 	})
 	return blogHexID
 }

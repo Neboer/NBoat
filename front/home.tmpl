@@ -2,9 +2,10 @@
 
 <div class="row no-gutters border rounded overflow-hidden flex-md-row m-3 shadow-sm h-md-250 position-relative">
     <div class="col-9 p-4 d-flex flex-column position-static">
-        <h3 class="mb-0">{{ .Title }}</h3>
-        <div class="mb-1 text-muted">{{ .Time }}</div>
-        <p class="card-text mb-auto">{{ .Brief }}</p>
+        <h3 class="mb-0">{{ .BlogName }}</h3>
+        <p>{{ .CoverPictureURL }}</p>
+        <div class="mb-1 text-muted">{{ .CreateTime }}</div>
+        <p class="card-text mb-auto">{{ .BlogBriefContent }}</p>
         <a href="#" class="stretched-link">Continue reading</a>
     </div>
 

@@ -13,15 +13,13 @@ import (
 
 func main() {
 	server := gin.Default()
-
-	server.Use(static.ServeRoot("/", "front"))
-	boat.BindBoatRenderer(server.Group(""))
-	mainServer := server.Group("/api")
-
 	database := dbWork.ConnectionInit()
-
-	nopiser.BindNopiser(mainServer, database)
-	ritin.BindRitin(mainServer, database)
+	nboatCollection, ritinCollection, nopiserCollection := dbWork.GetCollection(*database)
+	server.Use(static.ServeRoot("/", "front"))
+	boat.BindBoatRenderer(server.Group(""), nboatCollection, ritinCollection)
+	apiServer := server.Group("/api")
+	nopiser.BindNopiser(apiServer, nopiserCollection)
+	ritin.BindRitin(apiServer, ritinCollection)
 
 	server.GET("/er", func(ctx *gin.Context) {
 		delta := `[{"insert":"This "},{"attributes":{"italic":true},"insert":"is"},

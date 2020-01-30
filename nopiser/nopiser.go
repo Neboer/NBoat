@@ -7,9 +7,8 @@ import (
 	"net/http"
 )
 
-func BindNopiser(engine *gin.RouterGroup, database *mongo.Database) {
+func BindNopiser(engine *gin.RouterGroup, pictureCollection *mongo.Collection) {
 	mainGroup := engine.Group("/nopiser")
-	pictureCollection := database.Collection("nopiser")
 	mainGroup.POST("/picture", func(context *gin.Context) {
 		uploadImageHandler(context, pictureCollection)
 	})

@@ -22,3 +22,8 @@ func ConnectionInit() *mongo.Database {
 	}
 	return client.Database("nboat")
 }
+
+// 按顺序返回三个collection。分别为nboat ritin和nopiser
+func GetCollection(database mongo.Database) (*mongo.Collection, *mongo.Collection, *mongo.Collection) {
+	return database.Collection("nboat"), database.Collection("ritin"), database.Collection("nopiser")
+}

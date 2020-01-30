@@ -20,9 +20,9 @@ type BlogInfoItem struct {
 
 // 作为插入的一个博文。如果前端想要创建一个新可插入博文，就需要填写以下结构。注意，这个结构不包含时间，对博文分类暂不实现。
 type BlogIn struct {
-	BlogName         string
-	CoverPictureURL  string
-	BlogDeltaContent string
+	BlogName         string `json:"blog_name"`
+	CoverPictureURL  string `json:"cover_picture_url"`
+	BlogDeltaContent string `json:"blog_delta_content"`
 }
 
 type BlogOut struct {
@@ -62,8 +62,8 @@ func InsertBlog(blog BlogIn, boatCollection *mongo.Collection, ritinCollection *
 }
 
 // 注意：这个getblog返回的是直接可以供顶层使用的blogout对象，这个对象不应该用在除了前端渲染器之外的任何地方，在大多数情况下，调用boat的mongoer里的api来解决问题
-func GetBlog(blogID string, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) (BlogOut, error) {
-	blogRecord, err := getBlogFromMongoCollection(blogID, boatCollection)
+func GetBlog(blogHexID string, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) (BlogOut, error) {
+	blogRecord, err := getBlogFromMongoCollection(blogHexID, boatCollection)
 	if err != nil {
 		return BlogOut{}, err
 	} else {
@@ -79,9 +79,21 @@ func GetBlog(blogID string, boatCollection *mongo.Collection, ritinCollection *m
 		}
 		return outputBlog, nil
 	}
-
 }
 
+// 当用户希望编辑一个博客内容的时候，应该返回其delta了。
+func GetBlogDelta(blogHexID string, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) (string, error) {
+	blogRecord, err := getBlogFromMongoCollection(blogHexID, boatCollection)
+	if err != nil {
+		return "", err
+	} else {
+		ritinArticleHexID := blogRecord.RelativeRitinID.Hex()
+		ritinArticle, _ := ritin.GetArticle(ritinArticleHexID, ritinCollection)
+		return ritinArticle.Content, nil
+	}
+}
+
+// 这个操作仅仅可以更新博文文章内容。
 func UpdateBlogContent(blogHexID string, newArticleDeltaContent string, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) error {
 	blogRecord, err := getBlogFromMongoCollection(blogHexID, ritinCollection)
 	if err != nil {

@@ -7,8 +7,7 @@ import (
 	"net/http"
 )
 
-func BindRitin(engine *gin.RouterGroup, database *mongo.Database) {
-	ritinCollection := database.Collection("ritin")
+func BindRitin(engine *gin.RouterGroup, ritinCollection *mongo.Collection) {
 	mainGroup := engine.Group("/ritin")
 	// 添加delta。
 	mainGroup.POST("/article", func(context *gin.Context) {

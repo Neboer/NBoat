@@ -1,16 +1,15 @@
 package boat
 
-//func GetBlogList() []BlogInfo {
-//	BlogInfoList := make([]BlogInfo, 0)
-//
-//}
-//
-///* 上传博客。这里的BlogInfo是一个完整的博客。
-//上传时，将博客的所有内容都填满，除了id之外。
-//*/
-//
-//func InsertBlogIntoDatabase(collection *mongo.Collection, info BlogInfo) error {
-//
-//	InsertStruct := primitive.M{"BlogName": info.BlogName, "CoverPictureURL": info.CoverPictureURL, "RitinId": info.BlogContentRitinInfo.ID}
-//	_, _ = dbWork.InsertStructureDataIntoCollection(collection)
-//}
+import (
+	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/mongo"
+)
+
+// 博客的大前端。从理论上来讲，用户根本不应该操作除了这里规定的api之外的其他api。暴露其他接口仅仅是为了不时之需。
+
+func BindBoatBackend(apiEngine *gin.RouterGroup, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) {
+	// post /api/boat/blog
+	apiEngine.POST("/blog", func(context *gin.Context) {
+
+	})
+}
