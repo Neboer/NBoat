@@ -1,6 +1,7 @@
 # 上传博客
 
-经过认证的用户可以上传一篇博客。
+经过认证的用户可以上传一篇博客。这里是上传一篇博客的后端，这里仅仅是“上传”的过程，“编辑”新博文的页面请参考
+[编辑博文](EditBlog.md)
 
 **URL** : `/api/boat/blog`
 
@@ -37,42 +38,33 @@
 
 ```json
 {
-  "blog_id": "博客的hex id。"
+  "blog_id": "博客的hex id"
 }
 ```
 
-**Content example** : Response will reflect back the updated information. A
-User with `id` of '1234' sets their name, passing `UAPP` header of 'ios1_2':
+## 请求错误
+
+
+**状态码** : `400/401`
+
+如果是请求体格式错误，`400`不带响应体。如果是name不合法/url错误/delta格式错误，
+`400`响应体为如下格式。
 
 ```json
 {
-    "id": 1234,
-    "first_name": "Joe",
-    "last_name": "Bloggs",
-    "email": "joe25@example.com",
-    "uapp": "ios1_2"
+  "error": "too long blog name"
 }
 ```
-
-## Error Response
-
-**Condition** : If provided data is invalid, e.g. a name field is too long.
-
-**Code** : `400 BAD REQUEST`
-
-**Content example** :
 
 ```json
 {
-    "first_name": [
-        "Please provide maximum 30 character or empty string",
-    ]
+  "error": "cover picture url is invalid"
 }
 ```
 
-## Notes
-
-* Endpoint will ignore irrelevant and read-only data such as parameters that
-  don't exist, or fields that are not editable like `id` or `email`.
-* Similar to the `GET` endpoint for the User, if the User does not have a
-  UserInfo instance, then one will be created for them.
+```json
+{
+  "error": "blog content delta is invalid"
+}
+```
+如果用户发出了未认证的请求，那么将返回`401 Unauthorized`，此响应没有响应体。

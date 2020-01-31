@@ -20,6 +20,7 @@ func main() {
 	apiServer := server.Group("/api")
 	nopiser.BindNopiser(apiServer, nopiserCollection)
 	ritin.BindRitin(apiServer, ritinCollection)
+	boat.BindBoatBackend(apiServer, nboatCollection, ritinCollection)
 
 	server.GET("/er", func(ctx *gin.Context) {
 		delta := `[{"insert":"This "},{"attributes":{"italic":true},"insert":"is"},

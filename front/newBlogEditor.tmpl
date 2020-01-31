@@ -1,0 +1,23 @@
+<script>
+    // 这个函数虽然没用，但是已经被调用到了，还是加上比较好。
+    function SetQuillContent(quill_obj) {
+        quill_obj.setContents([]);
+    }
+
+    function newBlog() {
+        // quill是全局对象，由var定义。
+        let delta = quill.getContents();
+        $.post("/api/ritin/article", JSON.stringify({content: JSON.stringify(delta.ops)}), (data) => {
+            window.location.href = "/api/ritin/article/" + data.articleId
+        })
+    }
+
+
+</script>
+
+<div class="h-50" id="editor" style="
+    min-height: 30rem;
+    max-height: 40rem;
+    overflow: scroll;
+"></div>
+<button class="btn btn-primary float-right mt-md-3" id="submit" onclick="newBlog">提交</button>

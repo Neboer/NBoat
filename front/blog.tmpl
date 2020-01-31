@@ -1,0 +1,4 @@
+{{/*博客的展示页面。整个页面由template完成HTML渲染。*/}}
+    <h1>{{ .BlogName }}</h1>
+    <img src="{{ .CoverPictureURL }}" alt="cover">
+    {{ .BlogArticleHTML }}

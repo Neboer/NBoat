@@ -20,12 +20,15 @@ $(() => {
             ['clean']                                         // remove formatting button
         ]
     };
-    let quill = new Quill('#editor', {
+    var quill = new Quill('#editor', {
         modules: {
             toolbar: toolbarOptions
         },
         theme: 'snow'
     });
+
+    SetQuillContent(quill);
+
     quill.getModule('toolbar').addHandler('image', () => {
         selectLocalImage();
     });
@@ -85,11 +88,4 @@ $(() => {
     }
 
 // quill editor add image handler
-
-    $("#submit").on("click", () => {
-        let delta = quill.getContents();
-        $.post("/api/ritin/article", JSON.stringify({content: JSON.stringify(delta.ops)}), (data) => {
-            window.location.href = "/api/ritin/article/" + data.articleId
-        })
-    });
 });

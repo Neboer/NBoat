@@ -5,6 +5,7 @@ import (
 	"Nboat/ritin"
 	quill "github.com/dchenk/go-render-quill"
 	"go.mongodb.org/mongo-driver/mongo"
+	"html/template"
 	"time"
 )
 
@@ -26,11 +27,17 @@ type BlogIn struct {
 }
 
 type BlogOut struct {
-	BlogName        string
-	CoverPictureURL string
-	BlogArticleHTML string // 这是编译之后的delta内容，是html形式的哦
-	CreateTime      time.Time
-	LastModified    time.Time
+	BlogName           string
+	CoverPictureURL    string
+	BlogArticleHTML    template.HTML // 这是编译之后的delta内容，是html形式的哦
+	CreateTimeString   string
+	LastModifiedString string
+}
+
+// 用来编辑的blog ,相当于作者模式对象。
+type BlogEdit struct {
+	BlogName         string
+	BlogDeltaContent string
 }
 
 // 对于每个博文，都请求一次数据库查找对应的ritin内容，这样的操作极大的降低了效率。不过这样虽然带来了额外的开销，但我坚信它是有好处的。
@@ -71,25 +78,28 @@ func GetBlog(blogHexID string, boatCollection *mongo.Collection, ritinCollection
 		ritinArticle, _ := ritin.GetArticle(ritinArticleHexID, ritinCollection)
 		articleHTMLbytes, _ := quill.Render([]byte(ritinArticle.Content))
 		outputBlog := BlogOut{
-			BlogName:        blogRecord.BlogName,
-			CoverPictureURL: blogRecord.CoverPictureURL,
-			BlogArticleHTML: string(articleHTMLbytes),
-			CreateTime:      ritinArticle.CreateTime,
-			LastModified:    ritinArticle.LastModifyTime,
+			BlogName:           blogRecord.BlogName,
+			CoverPictureURL:    blogRecord.CoverPictureURL,
+			BlogArticleHTML:    template.HTML(string(articleHTMLbytes)),
+			CreateTimeString:   ritinArticle.CreateTime.String(),
+			LastModifiedString: ritinArticle.LastModifyTime.String(),
 		}
 		return outputBlog, nil
 	}
 }
 
 // 当用户希望编辑一个博客内容的时候，应该返回其delta了。
-func GetBlogDelta(blogHexID string, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) (string, error) {
+func GetBlogDelta(blogHexID string, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) (BlogEdit, error) {
 	blogRecord, err := getBlogFromMongoCollection(blogHexID, boatCollection)
 	if err != nil {
-		return "", err
+		return BlogEdit{}, err
 	} else {
 		ritinArticleHexID := blogRecord.RelativeRitinID.Hex()
 		ritinArticle, _ := ritin.GetArticle(ritinArticleHexID, ritinCollection)
-		return ritinArticle.Content, nil
+		return BlogEdit{
+			BlogName:         blogRecord.BlogName,
+			BlogDeltaContent: ritinArticle.Content,
+		}, nil
 	}
 }
 

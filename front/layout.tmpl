@@ -2,20 +2,20 @@
 <!DOCTYPE html>
 <head>
     <title>Neboer's Boat - {{ current }}</title>
-    <script src="library/jquery-3.4.1.min.js"></script>
-    <script src="library/popper.min.js"></script>
-    <script src="library/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="library/bootstrap.min.css">
+    <script src="/library/jquery-3.4.1.min.js"></script>
+    <script src="/library/popper.min.js"></script>
+    <script src="/library/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/library/bootstrap.min.css">
     {{ if eq current "editor" }}
-        <link href="library/quill.snow.css" rel="stylesheet">
-        <script defer src="library/katex.min.js"></script>
-        <script src="library/quill.min.js"></script>
-        <link rel="stylesheet" href="library/katex.min.css">
+        <link href="/library/quill.snow.css" rel="stylesheet">
+        <script defer src="/library/katex.min.js"></script>
+        <script src="/library/quill.min.js"></script>
+        <link rel="stylesheet" href="/library/katex.min.css">
         <script src="editor.js"></script>
     {{ end }}
 </head>
 <body>
-<div class="w-75 m-auto" style="height: 50rem">
+<div class="w-75 m-auto">
     <header class="py-lg-2">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="text-center mx-auto">
