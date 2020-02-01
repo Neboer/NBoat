@@ -13,9 +13,13 @@ import (
 func BindBoatRenderer(engine *gin.RouterGroup, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) {
 	r := render.New(render.Options{Directory: "front", Layout: "layout", RequirePartials: true})
 	// 用户请求主页。主页上有一些博文。
-	engine.GET("/", func(context *gin.Context) {
+	engine.GET("/newest", func(context *gin.Context) {
 		BlogList := GetBlogBriefList(boatCollection, ritinCollection)
-		_ = r.HTML(context.Writer, http.StatusOK, "home", BlogList)
+		_ = r.HTML(context.Writer, http.StatusOK, "newest", BlogList)
+	})
+
+	engine.GET("/", func(context *gin.Context) {
+		_ = r.HTML(context.Writer, 200, "home", nil)
 	})
 
 	// /blog/:hexid 返回渲染完毕的博客内容。

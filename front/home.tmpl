@@ -1,16 +1,6 @@
-{{/*博客的index页面*/}}
-{{ range . }}
+{{/*主页，假装这里有个主页*/}}
 
-    <div class="row no-gutters border rounded overflow-hidden flex-md-row m-3 shadow-sm h-md-250 position-relative">
-        <div class="col-9 p-4 d-flex flex-column position-static h-25">
-            <h3 class="mb-0">{{ .BlogName }}</h3>
-            <div class="mb-1 text-muted">{{ .CreateTime }}</div>
-            <p class="card-text mb-auto">{{ .BlogBriefContent }}</p>
-            <a href="/blog/{{ .BlogHexID }}" class="stretched-link">Continue reading</a>
-        </div>
-        <div class="col-3">
-            <img src="{{ .CoverPictureURL }}" class="rounded mx-auto d-block position-absolute" alt="cover">
-        </div>
-    </div>
+<div class="text-center font-weight-lighter h1 m-lg-5">Neboer的主页</div>
 
-{{ end }}
+<div>没什么好介绍的，也没什么好认识的，我们对neboer所知不多，大概就是一只程序猿而已。</div>
+
