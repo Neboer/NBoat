@@ -6,7 +6,7 @@
     <script src="/library/popper.min.js"></script>
     <script src="/library/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/library/bootstrap.min.css">
-    {{ if eq current "editor" }}
+    {{ if eq current "existBlogEditor" "newBlogEditor" }}
         <link href="/library/quill.snow.css" rel="stylesheet">
         <script defer src="/library/katex.min.js"></script>
         <script src="/library/quill.min.js"></script>
@@ -49,7 +49,7 @@
                 <a class="nav-link {{ if eq current "sort" }} active {{ end }}" href="sort">分类</a>
             </li>
             <li class="nav-item flex-grow-1 text-center">
-                <a class="nav-link {{ if eq current "editor" }} active {{ end }}" href="editor">写博客</a>
+                <a class="nav-link {{ if eq current "newBlogEditor" }} active {{ end }}" href="editor">写博客</a>
             </li>
         </ul>
     </div>

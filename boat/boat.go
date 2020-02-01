@@ -28,7 +28,7 @@ func BindBoatBackend(apiEngine *gin.RouterGroup, boatCollection *mongo.Collectio
 		if err != nil {
 			context.AbortWithStatus(400)
 		} else {
-			err := UpdateBlogContent(blogId, newBlogContent, boatCollection, ritinCollection)
+			err := UpdateBlogContent(blogId, newBlogContent.BlogDeltaContent, boatCollection, ritinCollection)
 			if err == mongo.ErrNoDocuments {
 				context.AbortWithStatus(404)
 			} else {

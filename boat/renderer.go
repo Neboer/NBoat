@@ -62,6 +62,6 @@ func BindBoatRenderer(engine *gin.RouterGroup, boatCollection *mongo.Collection,
 
 	// 返回通用编辑页面，创建博客的页面。
 	engine.GET("/editor", func(context *gin.Context) {
-		_ = r.HTML(context.Writer, http.StatusOK, "editor", nil)
+		_ = r.HTML(context.Writer, http.StatusOK, "newBlogEditor", nil)
 	})
 }
