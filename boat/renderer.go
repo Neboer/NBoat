@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/render"
 	"go.mongodb.org/mongo-driver/mongo"
+	"html/template"
 	"net/http"
 )
 
@@ -52,11 +53,16 @@ func BindBoatRenderer(engine *gin.RouterGroup, boatCollection *mongo.Collection,
 		} else if err != nil {
 			context.AbortWithStatus(400)
 		} else {
-			_ = r.HTML(context.Writer, 200, "existBlogEditor", map[string]string{
-				"BlogDeltaContent": blogEditObject.BlogDeltaContent,
-				"BlogId":           blogId,
-				"BlogName":         blogEditObject.BlogName,
-			})
+			_ = r.HTML(context.Writer, 200, "existBlogEditor",
+				struct {
+					BlogDeltaContent template.JS
+					BlogId           string
+					BlogName         string
+				}{
+					template.JS(blogEditObject.BlogDeltaContent),
+					blogId,
+					blogEditObject.BlogName,
+				})
 		}
 	})
 

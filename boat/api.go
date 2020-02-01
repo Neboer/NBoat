@@ -11,12 +11,13 @@ import (
 
 // 作为博客列表的一项输出。
 type BlogInfoItem struct {
-	BlogName string
+	BlogHexID string
+	BlogName  string
 	// 封面图片网址，这个应该在上传博客的时候就已经指定了
 	CoverPictureURL string
 	// 我们认为博客创建的时间和修改的时间就是博客正文内容改变的时间。
 	CreateTime       time.Time
-	BlogBriefContent string // 这是博客的简短内容表述。
+	BlogBriefContent string // 这是博客的简短内容表述，由ritin模块生成。
 }
 
 // 作为插入的一个博文。如果前端想要创建一个新可插入博文，就需要填写以下结构。注意，这个结构不包含时间，对博文分类暂不实现。
@@ -47,10 +48,11 @@ func GetBlogBriefList(boatCollection *mongo.Collection, ritinCollection *mongo.C
 	for _, blog := range blogList {
 		article, _ := ritin.GetArticle(blog.RelativeRitinID.Hex(), ritinCollection)
 		currentBlogInfo := BlogInfoItem{
+			BlogHexID:        blog.ID.Hex(),
 			BlogName:         blog.BlogName,
 			CoverPictureURL:  blog.CoverPictureURL,
 			CreateTime:       article.CreateTime,
-			BlogBriefContent: "this is brief content", // 准备做一个提取quill delta文本内容的生成器。
+			BlogBriefContent: ritin.GetBriefTextOfArticle(20, article.Content), // 准备做一个提取quill delta文本内容的生成器。
 		}
 		blogBriefList = append(blogBriefList, currentBlogInfo)
 	}

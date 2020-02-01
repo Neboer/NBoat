@@ -6,6 +6,8 @@ github.com/dchenk/go-render-quill v0.0.0-20190103002240-ec868ac0fe4a h1:uuRyBK0S
 github.com/dchenk/go-render-quill v0.0.0-20190103002240-ec868ac0fe4a/go.mod h1:gC5JB0oYX/0KQbFSzHS9wTxUyw0+XONyoow8YnyxGxk=
 github.com/eknkc/amber v0.0.0-20171010120322-cdade1c07385/go.mod h1:0vRUJqYpeSZifjYj7uP3BG/gKcuzL9xWVV/Y+cK33KM=
 github.com/elazarl/go-bindata-assetfs v1.0.0/go.mod h1:v+YaWX3bdea5J/mo8dSETolEo7R71Vk1u8bnjau5yw4=
+github.com/fmpwizard/go-quilljs-delta v0.0.5 h1:2wg/DMnMjKPj7XoYEEx+o2oMP06wRpdOOztB4gGbWHc=
+github.com/fmpwizard/go-quilljs-delta v0.0.5/go.mod h1:Q2EU2WOJzGHYDsxbViucwv5MWPo+wvIMTUZ3jDpjTvQ=
 github.com/gin-contrib/sse v0.1.0 h1:Y/yl/+YNO8GZSjAhjMsSuLt29uWRFHdHYUb5lYOV9qE=
 github.com/gin-contrib/sse v0.1.0/go.mod h1:RHrZQHXnP2xjPF+u1gW/2HnVO7nvIa9PG3Gm+fLHvGI=
 github.com/gin-contrib/static v0.0.0-20191128031702-f81c604d8ac2 h1:xLG16iua01X7Gzms9045s2Y2niNpvSY/Zb1oBwgNYZY=

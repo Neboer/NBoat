@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/DataDog/zstd v1.4.4 // indirect
 	github.com/dchenk/go-render-quill v0.0.0-20190103002240-ec868ac0fe4a
+	github.com/fmpwizard/go-quilljs-delta v0.0.5
 	github.com/gin-contrib/static v0.0.0-20191128031702-f81c604d8ac2
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-stack/stack v1.8.0 // indirect
