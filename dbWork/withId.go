@@ -36,8 +36,8 @@ func UpdateStructureDataFromCollection(collection *mongo.Collection, hexId strin
 		return err
 	}
 	mongoContext := context.Background()
-	result := collection.FindOneAndReplace(mongoContext, bson.M{"_id": objectId}, newStructuredData)
-	return result.Err()
+	_, err = collection.UpdateOne(mongoContext, bson.M{"_id": objectId}, bson.M{"$set": newStructuredData})
+	return err
 }
 
 // 等等你混进来是干什么的，这是withid的地方。。。
