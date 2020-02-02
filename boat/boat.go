@@ -26,13 +26,20 @@ func BindBoatBackend(apiEngine *gin.RouterGroup, boatCollection *mongo.Collectio
 		}{}
 		err := context.BindJSON(&newBlogContent)
 		if err != nil {
-			context.AbortWithStatus(400)
+			_ = context.AbortWithError(400, err)
+			//context.AbortWithStatus(400)
 		} else {
 			err := UpdateBlogContent(blogId, newBlogContent.BlogDeltaContent, boatCollection, ritinCollection)
-			if err == mongo.ErrNoDocuments {
-				context.AbortWithStatus(404)
+			if err != nil {
+				if err == mongo.ErrNoDocuments {
+					context.AbortWithStatus(404)
+				} else {
+					_ = context.AbortWithError(400, err)
+					//context.AbortWithStatus(400)
+				}
 			} else {
-				context.AbortWithStatus(400)
+				context.Status(200)
+				context.Abort()
 			}
 		}
 	})

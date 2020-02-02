@@ -52,7 +52,7 @@ func GetBlogBriefList(boatCollection *mongo.Collection, ritinCollection *mongo.C
 			BlogName:         blog.BlogName,
 			CoverPictureURL:  blog.CoverPictureURL,
 			CreateTime:       article.CreateTime,
-			BlogBriefContent: ritin.GetBriefTextOfArticle(20, article.Content), // 准备做一个提取quill delta文本内容的生成器。
+			BlogBriefContent: ritin.GetBriefTextOfArticle(80, article.Content), // 准备做一个提取quill delta文本内容的生成器。// 已经做出来了！
 		}
 		blogBriefList = append(blogBriefList, currentBlogInfo)
 	}
@@ -107,7 +107,7 @@ func GetBlogDelta(blogHexID string, boatCollection *mongo.Collection, ritinColle
 
 // 这个操作仅仅可以更新博文文章内容。
 func UpdateBlogContent(blogHexID string, newArticleDeltaContent string, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) error {
-	blogRecord, err := getBlogFromMongoCollection(blogHexID, ritinCollection)
+	blogRecord, err := getBlogFromMongoCollection(blogHexID, boatCollection)
 	if err != nil {
 		return err
 	} else {

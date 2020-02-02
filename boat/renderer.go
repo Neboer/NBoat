@@ -74,4 +74,8 @@ func BindBoatRenderer(engine *gin.RouterGroup, boatCollection *mongo.Collection,
 	engine.GET("/editor", func(context *gin.Context) {
 		_ = r.HTML(context.Writer, http.StatusOK, "newBlogEditor", nil)
 	})
+
+	engine.GET("/sort", func(context *gin.Context) {
+		_ = r.HTML(context.Writer, 200, "sort", nil)
+	})
 }

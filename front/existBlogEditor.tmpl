@@ -4,18 +4,19 @@
 <script>
     /*这里用到了一个很聪明的做法。这里定义的函数会在quill实例化之后就被调用，因此十分方便。*/
     function SetQuillContent(quill_obj) {
-        quill_obj.setContents([
-            {{ .BlogDeltaContent }}
-            // {insert: 'Hello '},
-            // {insert: 'what!', attributes: {bold: true}},
-            // {insert: '\n'}
-        ]);
+        quill_obj.setContents({{ .BlogDeltaContent }});
     }
 
     function updateBlog() {
         let delta = quill.getContents();
-        $.put("/api/ritin/article/{{ .BlogId }}", JSON.stringify(delta.ops), () => {
-            window.location.href = "/api/ritin/article/{{ .BlogId }}"
+        $.ajax({
+            url: "/api/blog/{{ .BlogId }}",
+            type: 'PUT',
+            contentType: "application/json",
+            data: JSON.stringify({blog_delta_content: JSON.stringify(delta.ops)}),
+            success: function () {
+                window.location.href = "/blog/{{ .BlogId }}"
+            }
         });
     }
 </script>
@@ -27,7 +28,7 @@
     max-height: 40rem;
     overflow: scroll;
 "></div>
-<button class="btn btn-primary float-right mt-md-3" id="submit" onclick="updateBlog">提交</button>
+<button class="btn btn-primary float-right mt-md-3" id="submit" onclick="updateBlog()">提交</button>
 
 <!--    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
 <!--    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"-->
