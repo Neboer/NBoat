@@ -6,17 +6,16 @@ import (
 	quill "github.com/dchenk/go-render-quill"
 	"go.mongodb.org/mongo-driver/mongo"
 	"html/template"
-	"time"
 )
 
-// 作为博客列表的一项输出。
+// 作为博客列表的一项输出，注意这个输出的目标是直接参与渲染的。
 type BlogInfoItem struct {
 	BlogHexID string
 	BlogName  string
 	// 封面图片网址，这个应该在上传博客的时候就已经指定了
-	CoverPictureURL string
+	CoverPictureURL template.URL
 	// 我们认为博客创建的时间和修改的时间就是博客正文内容改变的时间。
-	CreateTime       time.Time
+	CreateTimeString string
 	BlogBriefContent string // 这是博客的简短内容表述，由ritin模块生成。
 }
 
@@ -29,7 +28,7 @@ type BlogIn struct {
 
 type BlogOut struct {
 	BlogName           string
-	CoverPictureURL    string
+	CoverPictureURL    template.URL
 	BlogArticleHTML    template.HTML // 这是编译之后的delta内容，是html形式的哦
 	CreateTimeString   string
 	LastModifiedString string
@@ -50,8 +49,8 @@ func GetBlogBriefList(boatCollection *mongo.Collection, ritinCollection *mongo.C
 		currentBlogInfo := BlogInfoItem{
 			BlogHexID:        blog.ID.Hex(),
 			BlogName:         blog.BlogName,
-			CoverPictureURL:  blog.CoverPictureURL,
-			CreateTime:       article.CreateTime,
+			CoverPictureURL:  template.URL(blog.CoverPictureURL),
+			CreateTimeString: article.CreateTime.String()[:19],
 			BlogBriefContent: ritin.GetBriefTextOfArticle(80, article.Content), // 准备做一个提取quill delta文本内容的生成器。// 已经做出来了！
 		}
 		blogBriefList = append(blogBriefList, currentBlogInfo)
@@ -81,10 +80,10 @@ func GetBlog(blogHexID string, boatCollection *mongo.Collection, ritinCollection
 		articleHTMLbytes, _ := quill.Render([]byte(ritinArticle.Content))
 		outputBlog := BlogOut{
 			BlogName:           blogRecord.BlogName,
-			CoverPictureURL:    blogRecord.CoverPictureURL,
+			CoverPictureURL:    template.URL(blogRecord.CoverPictureURL),
 			BlogArticleHTML:    template.HTML(string(articleHTMLbytes)),
-			CreateTimeString:   ritinArticle.CreateTime.String(),
-			LastModifiedString: ritinArticle.LastModifyTime.String(),
+			CreateTimeString:   ritinArticle.CreateTime.String()[0:19],
+			LastModifiedString: ritinArticle.LastModifyTime.String()[0:19],
 		}
 		return outputBlog, nil
 	}

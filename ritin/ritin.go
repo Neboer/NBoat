@@ -7,9 +7,10 @@ import (
 	"net/http"
 )
 
-func BindRitin(engine *gin.RouterGroup, ritinCollection *mongo.Collection) {
+func BindRitin(engine *gin.RouterGroup, ritinCollection *mongo.Collection, authenticator gin.HandlerFunc) {
 	mainGroup := engine.Group("/ritin")
 	// 添加delta。
+	mainGroup.Use(authenticator)
 	mainGroup.POST("/article", func(context *gin.Context) {
 		upload := struct {
 			Content string `json:"content"`

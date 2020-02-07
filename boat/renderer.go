@@ -12,7 +12,7 @@ import (
 // 这里负责渲染博客的各个页面。这里直接绑定到服务器路径上。这是服务器的真正主页。
 func BindBoatRenderer(engine *gin.RouterGroup, boatCollection *mongo.Collection, ritinCollection *mongo.Collection) {
 	r := render.New(render.Options{Directory: "front", Layout: "layout", RequirePartials: true})
-	// 用户请求主页。主页上有一些博文。
+	// 用户请求“最新的”，这个上有一个博文总列表。
 	engine.GET("/newest", func(context *gin.Context) {
 		BlogList := GetBlogBriefList(boatCollection, ritinCollection)
 		_ = r.HTML(context.Writer, http.StatusOK, "newest", BlogList)
