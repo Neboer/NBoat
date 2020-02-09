@@ -46,6 +46,11 @@ Ritin是博客的核心，每篇博文本质上都是一次Paste的过程。
 ## Nopiser
 这个项目当然也需要保存图片数据等等。在作者上传图片的时候，会异步请求到服务器，服务器端保存图片并返回其地址。
 这也就相当于一个图床了。这个图床可以起名Neboer's Picture Server(Nopiser)
+## 部署
+执行这句话，以便于下载全部依赖到指定的区域。
+```shell script
+wget -i getlibrary.txt --directory-prefix ./front/library
+``` 
 ## future
 项目将会部署到我的主页中。至于其HTTPS后端……再另寻服务器吧。一个域名、一个证书什么的，足够了。
 
