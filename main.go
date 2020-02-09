@@ -15,6 +15,9 @@ import (
 
 type SecretContent struct {
 	IdentityPassword string `json:"identity_password"`
+	MongoLocation    string `json:"mongo_ip:port"`
+	Username         string `json:"mongo_username"`
+	Password         string `json:"mongo_password"`
 }
 
 var SecretObject SecretContent
@@ -33,7 +36,7 @@ func init() {
 
 func main() {
 	server := gin.Default()
-	database := dbWork.ConnectionInit()
+	database := dbWork.ConnectionInit(SecretObject.MongoLocation, SecretObject.Username, SecretObject.Password)
 	nboatCollection, ritinCollection, nopiserCollection := dbWork.GetCollection(*database)
 	// 身份验证，把身份绑定到请求参数上。
 	server.Use(cookieauth.AuthenticGate(SecretObject.IdentityPassword))

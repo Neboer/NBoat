@@ -9,9 +9,13 @@ import (
 	"time"
 )
 
-func ConnectionInit() *mongo.Database {
+func ConnectionInit(MongoLocationString string, Username string, Password string) *mongo.Database {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://"+MongoLocationString).SetAuth(options.Credential{
+		AuthSource: "admin",
+		Username:   Username,
+		Password:   Password,
+	}))
 	if err != nil {
 		log.Fatal(err)
 	}
