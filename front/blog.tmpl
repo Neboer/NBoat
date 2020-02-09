@@ -1,9 +1,30 @@
 {{/*博客的展示页面。整个页面由template完成HTML渲染。*/}}
-<div style="overflow: hidden; height: 10rem;width: auto;">
-<img src="{{ .Blog.CoverPictureURL }}" class="w-100" alt="cover">
-</div>
-<h1 class="mt-lg-5">{{ .Blog.BlogName }}</h1>
+{{ define "otherlib-blog"}}
+    <link href="/library/quill.snow.css" rel="stylesheet">
+    <script defer src="/library/katex.min.js"></script>
+    <link rel="stylesheet" href="/library/katex.min.css">
+{{ end }}
+
+{{ if ne .Blog.CoverPictureURL "" }}
+    <div style="overflow: hidden; height: 10rem;width: auto;">
+        <img src="{{ .Blog.CoverPictureURL }}" class="w-100" alt="cover">
+    </div>
+{{ end }}
+<h1 class="mt-lg-5">{{ .Blog.BlogName }}
+    {{ if .IsAuthed }}
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="30" height="60" data-icon="pencil"
+             viewBox="0 0 8 8"
+             style="float: right">
+            <a href="/editor/{{ .Blog.BlogHexId }} ">
+                <path d="M6 0l-1 1 2 2 1-1-2-2zm-2 2l-4 4v2h2l4-4-2-2z"/>
+            </a>
+        </svg>
+    {{ end }}
+</h1>
+
 
 <hr class="my-sm-2">
 
-{{ .Blog.BlogArticleHTML }}
+<div class="ql-editor" style="padding: 0">
+    {{ .Blog.BlogArticleHTML }}
+</div>

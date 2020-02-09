@@ -27,6 +27,7 @@ type BlogIn struct {
 }
 
 type BlogOut struct {
+	BlogHexId          string
 	BlogName           string
 	CoverPictureURL    template.URL
 	BlogArticleHTML    template.HTML // 这是编译之后的delta内容，是html形式的哦
@@ -79,6 +80,7 @@ func GetBlog(blogHexID string, boatCollection *mongo.Collection, ritinCollection
 		ritinArticle, _ := ritin.GetArticle(ritinArticleHexID, ritinCollection)
 		articleHTMLbytes, _ := quill.Render([]byte(ritinArticle.Content))
 		outputBlog := BlogOut{
+			BlogHexId:          blogHexID,
 			BlogName:           blogRecord.BlogName,
 			CoverPictureURL:    template.URL(blogRecord.CoverPictureURL),
 			BlogArticleHTML:    template.HTML(string(articleHTMLbytes)),
