@@ -1,9 +1,9 @@
 {{/*博客的展示页面。整个页面由template完成HTML渲染。*/}}
 <div style="overflow: hidden; height: 10rem;width: auto;">
-<img src="{{ .CoverPictureURL }}" class="w-100" alt="cover">
+<img src="{{ .Blog.CoverPictureURL }}" class="w-100" alt="cover">
 </div>
-<h1 class="mt-lg-5">{{ .BlogName }}</h1>
+<h1 class="mt-lg-5">{{ .Blog.BlogName }}</h1>
 
 <hr class="my-sm-2">
 
-{{ .BlogArticleHTML }}
+{{ .Blog.BlogArticleHTML }}

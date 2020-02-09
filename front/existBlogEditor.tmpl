@@ -1,6 +1,14 @@
 {{/*博客的编辑器页面，很有趣的页面，编辑器需要的javascript都已经在前面提供了。我*/}}
 <!-- Include stylesheet -->
 <!-- Create the editor container -->
+{{ define "otherlib-existBlogEditor" }}
+    <link href="/library/quill.snow.css" rel="stylesheet">
+    <script defer src="/library/katex.min.js"></script>
+    <script src="/library/quill.min.js"></script>
+    <link rel="stylesheet" href="/library/katex.min.css">
+    <script src="/editor.js"></script>
+{{ end }}
+
 <script>
     /*这里用到了一个很聪明的做法。这里定义的函数会在quill实例化之后就被调用，因此十分方便。*/
     function SetQuillContent(quill_obj) {

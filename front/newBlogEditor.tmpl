@@ -1,3 +1,11 @@
+{{ define "otherlib-newBlogEditor" }}
+    <link href="/library/quill.snow.css" rel="stylesheet">
+    <script defer src="/library/katex.min.js"></script>
+    <script src="/library/quill.min.js"></script>
+    <link rel="stylesheet" href="/library/katex.min.css">
+    <script src="/editor.js"></script>
+{{ end }}
+
 <script>
     // 这个函数虽然没用，但是已经被调用到了，还是加上比较好。
     function SetQuillContent(quill_obj) {
