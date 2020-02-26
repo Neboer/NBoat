@@ -4,6 +4,7 @@
     <script src="/library/quill.min.js"></script>
     <link rel="stylesheet" href="/library/katex.min.css">
     <script src="/editor.js"></script>
+    <link href="blog.css" rel="stylesheet"/>
 {{ end }}
 
 <script>
@@ -40,9 +41,7 @@
     <button class="btn btn-outline-dark" onclick="uploadCoverImage()">上传封面图片</button>
 </label>
 
-<div class="h-50" id="editor" style="
-    min-height: 30rem;
-    max-height: 40rem;
-    overflow: scroll;
-"></div>
+<div id="scrolling-container" style="height: 100%;min-height: 100%;overflow-y: auto;">
+    <div class="h-50" id="editor" style="height: auto;min-height: 100%;"></div>
+</div>
 <button class="btn btn-primary float-right mt-md-3" id="submit" onclick="newBlog()">提交</button>

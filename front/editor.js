@@ -77,7 +77,8 @@ $(() => {
         modules: {
             toolbar: toolbarOptions
         },
-        theme: 'snow'
+        theme: 'snow',
+        scrollingContainer: '#scrolling-container'
     });
 
     SetQuillContent(quill);

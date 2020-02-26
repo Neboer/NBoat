@@ -2,13 +2,14 @@ package cookieauth
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 	"strings"
 )
 
 func SetIdentity(server *gin.Engine, authString string) {
 	server.GET("/"+authString, func(context *gin.Context) {
 		context.SetCookie("identity", authString, 0, "/", "", false, false)
-		context.Abort()
+		context.Redirect(http.StatusTemporaryRedirect, "/")
 	})
 }
 

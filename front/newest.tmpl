@@ -15,8 +15,8 @@
                 {{ end }}
             </h3>
             <div class="mb-1 text-muted">{{ .CreateTimeString }}</div>
-            <p class="card-text mb-auto">{{ .BlogBriefContent }}</p>
-            <a href="/blog/{{ .BlogHexID }}">Continue reading</a>
+            <p class="card-text mb-auto">{{ .BlogBriefContent }} ……</p>
+            <a href="/blog/{{ .BlogHexID }}">继续阅读</a>
         </div>
         {{ if ne .CoverPictureURL "" }}
             <div class="col-3">
