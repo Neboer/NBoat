@@ -1,0 +1,90 @@
+swagger: "2.0"
+info:
+  title: Neboer's boat API reference document
+  description: Nboat项目的api参考
+  version: 1.0.0
+host: www.neboer.site
+schemes:
+  - https
+paths:
+  /:
+    get:
+      tags:
+        - 网页
+      summary: 返回主页面
+      description: 返回博客的主页，和直接请求/home是一样的。
+      produces:
+        - text/html
+      responses:
+        200:
+          description: 成功，返回博客主页的HTML内容。
+  /newest?start=xx&end=xx:
+    get:
+      tags:
+        - 网页
+      parameters:
+        - in: query
+          name: from
+          required: false
+          type: integer
+          description: 查询的起始index
+        - in: query
+          name: to
+          required: true
+          type: integer
+          description: 查询的结束index
+      summary: 返回“最新的”博客列表页面。
+      description: 返回“最新的”博客列表页面。
+      produces:
+        - text/html
+      responses:
+        200:
+          description: 成功，返回博客按时间排序的列表的HTML页面。
+  /sort:
+    get:
+      tags:
+        - 网页
+      summary: 返回分类的index列表
+      description: 这是不带parameter的“分类”页面，会展示写有博客分类的分类导航。
+      produces:
+        - text/html
+      responses:
+        200:
+          description: 成功，返回分类页面的index导航页。
+
+  /sort/{sort}:
+    get:
+      tags:
+        - 网页
+      summary: 返回具体的某个分类的目录列表页面
+      produces:
+        - text/html
+      responses:
+        200:
+          description:
+            成功，返回某个分类下的具体目录index。
+
+  /blog/{blog_id}/{article_id}:
+    get:
+      tags:
+        - 网页
+      summary: 返回一篇博客的一篇文章。
+      description: 返回一篇博客的详细内容页面，如果请求没有带article_id，则会默认返回第一篇文章。
+      parameters:
+        - in: path
+          required: true
+          name: blog_id
+          type: string
+        - in: path
+          required: false
+          name: article_id
+          type: integer
+      produces:
+        - text/html
+      responses:
+        200:
+          description: 成功，返回一篇博客的某篇文章的详细信息的页面。
+        404:
+          description: 请求的博客不存在或请求的博客中并不包含某篇文章。
+
+

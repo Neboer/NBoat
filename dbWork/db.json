@@ -1,4 +1,5 @@
 {
+  "_id": "XXXX",
   "Title": "whole name of the blog item",
   "Introduction": "detailed introduction of the blog item",
   "Sort": [
@@ -27,7 +28,7 @@
           "Content": "...currently not known how to store comments.",
           "Comment": [
             {
-              "UserName": "Misaka Mikoto",
+              "Username": "Misaka Mikoto",
               "Time": "20001222",
               "Email": "RAILGUN@gakuentoshi.city",
               "Content": "...",
@@ -36,7 +37,7 @@
           ]
         },
         {
-          "Name": "Shirai Kuroko",
+          "Username": "Shirai Kuroko",
           "Time": "2000Z2222",
           "Email": "Kuroko@gakuentoshi.city",
           "Content": "...currently not known how to store comments.",
