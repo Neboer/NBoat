@@ -48,6 +48,23 @@ func CreateEmptyBlogSubject(collection *mongo.Collection, info BlogSubjectInfo) 
 	return insertResult.InsertedID.(primitive.ObjectID).Hex(), err
 }
 
+// 删除一个博客项目
+func DeleteBlogSubject(collection *mongo.Collection, hexID string) error {
+	mongoContext := context.Background()
+	objectId, err := primitive.ObjectIDFromHex(hexID)
+	if err != nil {
+		return err
+	}
+	deleteResult, err := collection.DeleteOne(mongoContext, primitive.M{"_id": objectId})
+	if err != nil {
+		return err
+	}
+	if deleteResult.DeletedCount == 0 {
+		return mongo.ErrNoDocuments
+	}
+	return err
+}
+
 // 注意，插入是按照最大+1的原则，blog的index本身并没有参考价值！
 func InsertArticle(collection *mongo.Collection, inputArticle ArticleInput, toBlogSubjectID string) (int, error) {
 	mongoContext := context.Background()
@@ -71,6 +88,26 @@ func InsertArticle(collection *mongo.Collection, inputArticle ArticleInput, toBl
 		return 0, err
 	}
 	return maxValue + 1, nil
+}
+
+func UpdateBlogSubjectInfo(collection *mongo.Collection, newInfo BlogSubjectInfo, fromBlogSubjectID string) error {
+	mongoContext := context.Background()
+	objectId, err := primitive.ObjectIDFromHex(fromBlogSubjectID)
+	if err != nil {
+		return err
+	}
+	updateResult, err := collection.UpdateOne(mongoContext, bson.M{"_id": objectId}, bson.M{"info": newInfo, "meta.last_modify_time": time.Now()})
+	if err != nil {
+		return err
+	}
+	if updateResult.MatchedCount == 0 {
+		return mongo.ErrNoDocuments
+	} else if updateResult.ModifiedCount == 0 {
+		// 要删除的index根本就不存在
+		return mongo.ErrInvalidIndexValue
+	} else {
+		return nil
+	}
 }
 
 // article被删去也不会改变index

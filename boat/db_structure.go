@@ -75,8 +75,8 @@ func (input ArticleInput) toArticle(index int) Article {
 	return Article{
 		Info: input.Info,
 		Meta: ArticleMeta{
-			CreateTime:     time.Time{},
-			LastModifyTime: time.Time{},
+			CreateTime:     time.Now(),
+			LastModifyTime: time.Now(),
 		},
 		Index:   index,
 		Content: input.Content,
