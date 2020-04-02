@@ -1,28 +1,31 @@
 {{/*博客的index页面*/}}
-{{ range .BlogList }}
+{{ range .BlogBriefList }}
 
     <div class="row no-gutters border rounded overflow-hidden flex-md-row m-3 shadow-sm h-md-250 position-relative">
-        <div class="col-9 p-4 d-flex flex-column position-static h-25">
-            <h3 class="mb-0">{{ .BlogName }}
+        <div class="{{ if eq .Info.CoverPictureURL "" }} col-12 {{ else }}  col-9 {{ end }} p-4 d-flex flex-column position-static h-25">
+            <h3 class="mb-0">{{ .Info.Title }}
                 {{ if $.IsAuthed }}
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="20" data-icon="pencil"
                          viewBox="0 0 8 8"
                          style="vertical-align: initial; float: right">
-                        <a href="/editor/{{ .BlogHexID }} ">
+                        <a href="/editor/{{ .ID }} ">
                             <path d="M6 0l-1 1 2 2 1-1-2-2zm-2 2l-4 4v2h2l4-4-2-2z"/>
                         </a>
                     </svg>
                 {{ end }}
             </h3>
-            <div class="mb-1 text-muted">{{ .CreateTimeString }}</div>
-            <p class="card-text mb-auto">{{ .BlogBriefContent }} ……</p>
-            <a href="/blog/{{ .BlogHexID }}">继续阅读</a>
+            <div class="mb-1 text-muted">{{ .Meta.CreateTime }}</div>
+            <p class="card-text mb-auto">{{ .Info.Introduction }} ……</p>
+            <a href="/blog/{{ .ID }}">继续阅读</a>
         </div>
-        {{ if ne .CoverPictureURL "" }}
+        {{ if ne .Info.CoverPictureURL "" }}
             <div class="col-3">
-                <img src="{{ .CoverPictureURL }}" class="rounded mx-auto d-block position-absolute" alt="cover">
+                <img src="{{ .Info.CoverPictureURL }}" class="rounded mx-auto d-block position-absolute" alt="cover">
             </div>
         {{end }}
     </div>
 
 {{ end }}
+
+私わとでも可愛いです、
+当前第{{.CurrentPage}}页，一共{{.TotalPageCount}}页。

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<head>
+    <title>Neboer's Boat - {{ current }}</title>
+    <script src="library/jquery-3.4.1.min.js"></script>
+    <script src="library/popper.min.js"></script>
+    <script src="library/tippy.min.js"></script>
+    <script src="library/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="library/bootstrap.min.css">
+    <link rel="stylesheet" href="newBlogEditor.css">
+    <link rel="stylesheet" href="library/quill.snow.css">
+    <script src="library/quill.min.js"></script>
+    <script src="library/aliyun-oss-sdk-6.5.0.min.js"></script>
+    <script src="editor.js"></script>
+
+</head>
+<body>
+<div class="w-75 m-auto">
+    <header class="py-lg-2">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+            <div class="text-center mx-auto">
+                <h1 class="large-op" style="font-family: fantasy">Neboer's Boat</h1>
+                <small>Neboer's blog isn't only about technique!</small>
+            </div>
+            <div class="position-absolute d-flex justify-content-end align-items-center" style="right: 13%">
+                <a class="text-muted" href="#" aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"
+                         viewBox="0 0 24 24" focusable="false"><title>Search</title>
+                        <circle cx="10.5" cy="10.5" r="7.5"/>
+                        <path d="M21 21l-5.2-5.2"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="nav-scroller py-1 mb-2">
+        <ul class="nav nav-tabs flex-fill">
+            <li class="nav-item flex-grow-1 text-center">
+                <a class="nav-link" href="/">主页</a>
+            </li>
+            <li class="nav-item flex-grow-1 text-center">
+                <a class="nav-link" href="/newest">最新的</a>
+            </li>
+            <li class="nav-item flex-grow-1 text-center">
+                <a class="nav-link" href="/sort">分类</a>
+            </li>
+            <li class="nav-item flex-grow-1 text-center">
+                <a class="nav-link active" href="#">编辑博文</a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="upload-modal" class="modal">
+        <div class="modal-dialog modal-content modal-body">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab">输入图片地址</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
+                                        role="tab">上传图片</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane show active" id="home" role="tabpanel">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Recipient's username">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">插入图片</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="profile" role="tabpanel">
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile03"
+                                   aria-describedby="inputGroupFileAddon03">
+                            <label class="custom-file-label" for="inputGroupFile03">选择文件</label>
+                        </div>
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button" data-toggle="dropdown" id="upload-choose">上传</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" id="upload-oss" href="javascript:void 0">阿里云oss图床</a>
+                                <a class="dropdown-item" id="upload-nop" href="javascript:void 0">本地nopiser图床</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="scrolling-container">
+        <div id="quill-container">
+            <h2>Minas Tirith</h2>
+            <p><br></p>
+            <p>Pippin looked out from the shelter of Gandalf"s cloak. He wondered if he was awake or still sleeping,
+                still in the swift-moving dream in which he had been wrapped so long since the great ride began. The
+                dark world was rushing by and the wind sang loudly in his ears. He could see nothing but the wheeling
+                stars, and away to his right vast shadows against the sky where the mountains of the South marched past.
+                Sleepily he tried to reckon the times and stages of their journey, but his memory was drowsy and
+                uncertain.</p>
+        </div>
+    </div>
+</div>
+</body>
+

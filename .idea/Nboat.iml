@@ -6,8 +6,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="image-upload" level="application" />
     <orderEntry type="library" name="@types/jquery" level="application" />
     <orderEntry type="library" name="@types/quill" level="application" />
+    <orderEntry type="library" name="@types/quill" level="application" />
+    <orderEntry type="library" name="@types/ali-oss" level="application" />
   </component>
 </module>

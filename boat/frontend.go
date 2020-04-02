@@ -7,11 +7,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type BoatFrontendSettings struct {
+type FrontendSettings struct {
 	CountOfBlogSubjectShowInPerPage int
 }
 
-func BindBoatFrontend(apiEngine *gin.RouterGroup, collection *mongo.Collection, settings BoatFrontendSettings) {
+func BindBoatFrontend(apiEngine *gin.RouterGroup, collection *mongo.Collection, settings FrontendSettings) {
 	r := render.New(render.Options{Directory: "front", Layout: "layout"})
 	apiEngine.GET("/", func(context *gin.Context) {
 		_ = r.HTML(context.Writer, 200, "home", struct{ IsAuthed bool }{IsAuthed: cookieauth.IsAuthed(context)})
@@ -19,7 +19,7 @@ func BindBoatFrontend(apiEngine *gin.RouterGroup, collection *mongo.Collection, 
 	// “最新的”博客列表，每页展示条数可以在main中设定。
 	apiEngine.GET("/newest", func(context *gin.Context) {
 		pageIndex := parseQueryIndex(context, settings.CountOfBlogSubjectShowInPerPage)
-		wholeBlogBriefList, err := GetBlogSubjectList(collection)
+		wholeBlogBriefList, _ := GetBlogSubjectList(collection)
 		blogListToShow := BlogSubjectBriefList{}
 		totalPageCount := len(wholeBlogBriefList)/settings.CountOfBlogSubjectShowInPerPage + 1
 		if pageIndex > totalPageCount {
@@ -41,6 +41,18 @@ func BindBoatFrontend(apiEngine *gin.RouterGroup, collection *mongo.Collection, 
 			CurrentPage:    pageIndex,
 			BlogBriefList:  blogListToShow,
 		}
-		_ = r.HTML(context.Writer, 200, "existBlogEditor", newestPage)
+		_ = r.HTML(context.Writer, 200, "newest", newestPage)
+	})
+
+	apiEngine.GET("/sort", func(context *gin.Context) {
+		_ = r.HTML(context.Writer, 200, "sort", nil)
+	})
+
+	apiEngine.GET("/newBlog", func(ctx *gin.Context) {
+
+	})
+
+	apiEngine.GET("/editor.js", func(context *gin.Context) {
+		context.Render()
 	})
 }
