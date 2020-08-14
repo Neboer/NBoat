@@ -1,4 +1,7 @@
 # Neboer's Boat
+
+## 本项目已经完成重构，请移步新仓库[Nboat2](https://github.com/neboer/Nboat2)，网址不变，谢谢。
+
 https://www.neboer.site
 
 > **武汉肺炎** - 这注定是一个不平凡的2020,愿一切安好。
